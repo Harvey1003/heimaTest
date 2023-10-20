@@ -200,3 +200,6 @@ public class test2 {
 ### 3.打乱字符串
 
 1、先用tochararray,
+
+# ArrayList<>集合
+
