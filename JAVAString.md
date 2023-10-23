@@ -203,3 +203,65 @@ public class test2 {
 
 # ArrayList<>集合
 
+## 1.基本使用
+
+```java
+        ArrayList<String> list = new ArrayList<>();
+        //添加元素 返回值是布尔型
+        list.add("aaa");
+        list.add("aa");
+        list.add("ab");
+        //可以直接传数据，返回布尔
+        list.remove("aa");
+        //可以传索引,返回被删除的数据
+        list.remove(2);
+        //修改
+        list.set(1,"bbb");//返回被覆盖的值
+        //查询
+        list.get(0);
+        //获取长度,size()。list.fori自动遍历
+        for (int i = 0; i < list.size(); i++) {
+            list.get(i)
+        }
+```
+
+## 2.基本数据类型的包装类
+
+char—Character，int—Integer
+
+## 3.添加学生对象，遍历
+
+添加student类 JavaBean，定义集合。
+
+```java
+ArrayList<Student> student = new ArrayList<>();
+        Student s1 = new Student("zhangshan",232);
+        Student s2 = new Student("lisi",23);
+        student.add(s1);
+        student.add(s2);
+        student.add(new Student("wangwu",21));
+Scanner sc = new Scanner(System.in);
+        for (int i = 0; i < 3; i++) {
+            System.out.println("输入姓名，年龄：");
+            student.add(new Student(sc.next(), sc.nextInt()));
+        }
+        for (int i = 0; i < student.size(); i++) {
+            System.out.println(student.get(i).getName()+","+student.get(i).getSex());
+        }
+```
+
+用userid查找用户信息，如果存在返回索引，如不存在返回-1
+
+```java
+public static int contains(ArrayList<User> users, String id) {
+        for (int i = 0; i < users.size(); i++) {
+            if (users.get(i).getId().equals(id)) {
+                //如果相同返回true，结束循环
+                return i;
+            }
+        }
+        //如果循环结束 没有找到返回false
+        return -1;
+    }
+```
+
