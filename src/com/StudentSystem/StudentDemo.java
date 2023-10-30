@@ -43,7 +43,7 @@ public class StudentDemo {
         while (true) {
             System.out.print("请输入id：");
             id = sc.next();
-            if (idinof(students, id)<0) {
+            if (idinof(students, id) < 0) {
                 break;
             } else {
                 System.out.println("请重新输入id");
@@ -65,9 +65,9 @@ public class StudentDemo {
         System.out.print("请输入要删除的学生学号：");
         String id = sc.next();
         int index = idinof(students, id);
-        if (index>=0) {
+        if (index >= 0) {
             Student remove = students.remove(index);
-            System.out.println(remove.getName()+"的信息已被删除");
+            System.out.println(remove.getName() + "的信息已被删除");
         } else {
             System.out.println("该生不存在,请重新选择。");
             return;
@@ -80,7 +80,21 @@ public class StudentDemo {
     public static void updateStudent(ArrayList<Student> students) {
         Scanner sc = new Scanner(System.in);
         System.out.print("请输入要修改的学生学号：");
-        int i = sc.nextInt();
+        String id = sc.next();
+        int index = idinof(students, id);
+        if (index == -1) {
+            System.out.println("要修改的id" + id + "不存在，请重新输入");
+            return;
+        }
+        //获取需要修改的学生对象
+        Student student = students.get(index);
+        System.out.println("输入需要修改的学生姓名");
+        student.setName(sc.next());
+        System.out.println("输入需要修改的学生年龄");
+        student.setAge(sc.nextInt());
+        System.out.println("输入需要修改的学生家庭住址");
+        student.setAdd(sc.next());
+        System.out.println("信息修改成功！");
     }
 
     //查询学生
@@ -89,7 +103,7 @@ public class StudentDemo {
             System.out.println("当前无学生信息，请添加后再查询。");
             return;
         }
-        System.out.println("id\t\t姓名\t年龄\t地址");
+        System.out.println("id\t姓名\t年龄\t地址");
         for (int i = 0; i < students.size(); i++) {
             Student student = students.get(i);
             System.out.println(student.getId() + "\t" + student.getName() + "\t" + student.getAge() + "\t" + student.getAdd());
@@ -104,13 +118,5 @@ public class StudentDemo {
             }
         }
         return -1;
-    }
-
-    //通过id获取索引。
-    public static int idtoindex(ArrayList<Student> students, String id) {
-        for (int i = 0; i < students.size(); i++) {
-
-        }
-        return 1;
     }
 }
