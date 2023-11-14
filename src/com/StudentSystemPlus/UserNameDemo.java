@@ -1,6 +1,9 @@
 package com.StudentSystemPlus;
 
+import com.StudentSystem.Student;
+
 import java.util.ArrayList;
+import java.util.Random;
 import java.util.Scanner;
 
 public class UserNameDemo {
@@ -12,6 +15,7 @@ public class UserNameDemo {
         System.out.println(user.getPassword());
         System.out.println(user.getPersonid());
         System.out.println(user.getPhoneNumber());
+        login(users);
     }
 
     //注册
@@ -60,30 +64,80 @@ public class UserNameDemo {
         }
         System.out.println("输入手机号：");
         String phonenumber = sc.next();
-        if(number(phonenumber)){
+        if (number(phonenumber)) {
 
-        }else {
+        } else {
             System.out.println("手机号码错误重新输入");
             return;
         }
         User user = new User(username, password1, personid, phonenumber);
         users.add(user);
     }
+
     //登录
+    public static void login(ArrayList<User> users) {
+        //录入账号判断是否存在
+        Scanner sc = new Scanner(System.in);
+        System.out.print("输入用户名：");
+        String username = sc.next();
+        int index = nameinof(users, username);
+        if(index==-1){
+            System.out.println("账号不存在，请注册");
+            return;
+        }
+        //录入密码,有三次输入机会
+        //
+        for (int i = 0; i < 3; i++) {
+            System.out.print("输入密码：");
+            String password = sc.next();
+            if (users.get(index).getPassword().equals(password)){
+                System.out.println();
+                break;
+            }else {
+                if(i==2){
+                    System.out.println("密码错误次数过多，稍等再试");
+                    return;
+                }
+                System.out.println("请输入正确的密码，您还有"+(2-i)+"次机会。");
+            }
+        }
+        //获取一个验证码，随机
+        //
+        Random random = new Random();
+        char[] chars={'Q','W','E','R','T','Y','U','I','O','P','A','S','D','F','G','H','J','K','L','Z','X','C','V','B','N','M','q','w','e','r','t','y','u','i','o','p','a','s','d','f','g','h','j','k','l','z','x','c','v','b','n','m','1','2','3','4','5','6','7','8','9','0'};
+        yanzheng:while (true){
+        StringBuilder sb = new StringBuilder();
+        for (int i = 0; i < 5; i++) {
+            int i1 = random.nextInt(chars.length);
+            sb.append(chars[i1]);
+        }
+        String yzm = sb.toString();
+        System.out.println("验证码是："+yzm);
+        //录入验证码
+        System.out.print("请输入验证码：");
+        String yzm2=sc.next();
+        if (yzm.equals(yzm2)){
+            break yanzheng;
+        }else {
+            System.out.println("验证码错误,重新输入");
+        }
+        }
+        //登录成功
+        System.out.println("登录成功！");
+    }
+    //忘记密码
 
-
-
-
-
-
-
-
+    //1.录入用户名，如果不存在提示未注册
+    //
+    //2.验证身份证号和手机号，
+    //
+    //3.输入密码
 
     //手机号格式判断
     public static boolean number(String phonenumber) {
         int length = phonenumber.length();
         //不能为空
-        if(phonenumber==null){
+        if (phonenumber == null) {
             return false;
         }
         //必须11位
@@ -91,20 +145,28 @@ public class UserNameDemo {
             return false;
         }
         //首位不能为0
-        if (phonenumber.charAt(0)=='0'){
+        if (phonenumber.charAt(0) == '0') {
             return false;
         }
         //必须全是数字
         for (int i = 0; i < length; i++) {
             char c = phonenumber.charAt(i);
-            if (c>='0'&&c<='9'){
-            }else {
+            if (c >= '0' && c <= '9') {
+            } else {
                 return false;
             }
         }
         return true;
     }
-
+    //判断字符串再集合中是否存在，存在返回索引，不存在返回-1
+    public static int nameinof(ArrayList<User> users, String name) {
+        for (int i = 0; i < users.size(); i++) {
+            if (users.get(i).getUsername().equals(name)) {
+                return i;
+            }
+        }
+        return -1;
+    }
     //身份证号格式判断
     public static boolean idNum(String id) {
         if (id == null) {

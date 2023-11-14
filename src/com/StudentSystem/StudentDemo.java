@@ -110,7 +110,7 @@ public class StudentDemo {
         }
     }
 
-    //判断id是否与集合中重复,如果重复返回重复id的索引，不重复则返回-1
+    //判断字符串是否与集合中重复,如果重复返回重复id的索引，不重复则返回-1
     public static int idinof(ArrayList<Student> students, String id) {
         for (int i = 0; i < students.size(); i++) {
             if (students.get(i).getId().equals(id)) {
