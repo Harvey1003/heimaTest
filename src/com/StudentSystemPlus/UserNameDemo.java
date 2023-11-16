@@ -31,58 +31,72 @@ public class UserNameDemo {
     public static void addname(ArrayList<User> users) {
         //用户名校验
         Scanner sc = new Scanner(System.in);
-        System.out.println("输入用户名：");
-        String username = sc.next();
-        int length = username.length();
-        if (length < 3 || length > 15) {
-            System.out.println("请输入3-15位字符,请重新输入");
-            return;
-        }
-        int count = 0;
-        for (int i = 0; i < username.length(); i++) {
-            char c = username.charAt(i);
-            if (c >= 'a' && c <= 'z' || c >= 'A' && c <= 'Z' || c >= '0' && c <= '9') {
-                if (c >= 'a' && c <= 'z' || c >= 'A' && c <= 'Z') {
-                    count++;
+        String username = null;
+        while (true) {
+            System.out.println("输入用户名：");
+            username = sc.next();
+            int length = username.length();
+            if (length < 3 || length > 15) {
+                System.out.println("请输入3-15位字符,请重新输入");
+                continue;
+            }
+            int count = 0;
+            for (int i = 0; i < username.length(); i++) {
+                char c = username.charAt(i);
+                if (c >= 'a' && c <= 'z' || c >= 'A' && c <= 'Z' || c >= '0' && c <= '9') {
+                    if (c >= 'a' && c <= 'z' || c >= 'A' && c <= 'Z') {
+                        count++;
+                    }
+                } else {
+                    System.out.println("请输入大小学英文字母和数字组成的用户名");
+                    continue;
                 }
+            }
+            if (count == 0) {
+                System.out.println("不能使用纯数字");
+                continue;
+            }
+            int index = nameinof(users, username);
+            if (index >= 0) {
+                System.out.println("用户名重复，请重新输入");
+                continue;
+            }
+            break;
+        }
+        String password1 = null;
+        while (true) {
+            System.out.println("输入密码：");
+            password1 = sc.next();
+            System.out.println("确认密码：");
+            String password2 = sc.next();
+            if (password1.equals(password2)) {
+                break;
             } else {
-                System.out.println("请输入大小学英文字母和数字组成的用户名");
-                return;
+                System.out.println("密码错误重新输入");
+                continue;
             }
         }
-        if (count == 0) {
-            System.out.println("不能使用纯数字");
-            return;
+        String personid = null;
+        while (true) {
+            System.out.println("输入身份证号：");
+            personid = sc.next();
+            if (idNum(personid)) {
+                break;
+            } else {
+                System.out.println("身份证号码错误重新输入");
+                continue;
+            }
         }
-        int index = nameinof(users, username);
-        if (index >= 0) {
-            System.out.println("用户名重复，请重新输入");
-            return;
-        }
-        System.out.println("输入密码：");
-        String password1 = sc.next();
-        System.out.println("确认密码：");
-        String password2 = sc.next();
-        if (password1.equals(password2)) {
-
-        } else {
-            System.out.println("密码错误重新输入");
-            return;
-        }
-        System.out.println("输入身份证号：");
-        String personid = sc.next();
-        if (idNum(personid)) {
-        } else {
-            System.out.println("身份证号码错误重新输入");
-            return;
-        }
-        System.out.println("输入手机号：");
-        String phonenumber = sc.next();
-        if (number(phonenumber)) {
-
-        } else {
-            System.out.println("手机号码错误重新输入");
-            return;
+        String phonenumber = null;
+        while (true) {
+            System.out.println("输入手机号：");
+            phonenumber = sc.next();
+            if (number(phonenumber)) {
+                break;
+            } else {
+                System.out.println("手机号码错误重新输入");
+                continue;
+            }
         }
         User user = new User(username, password1, personid, phonenumber);
         users.add(user);
