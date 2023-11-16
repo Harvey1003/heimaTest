@@ -8,14 +8,23 @@ import java.util.Scanner;
 
 public class UserNameDemo {
     public static void main(String[] args) {
+
         ArrayList<User> users = new ArrayList<>();
-        addname(users);
-        User user = users.get(0);
-        System.out.println(user.getUsername());
-        System.out.println(user.getPassword());
-        System.out.println(user.getPersonid());
-        System.out.println(user.getPhoneNumber());
-        login(users);
+        Scanner sc = new Scanner(System.in);
+        while (true) {
+            System.out.println("1，注册；2，登录；3，忘记密码");
+            int i = sc.nextInt();
+            switch (i) {
+                case 1 -> addname(users);
+                case 2 -> login(users);
+                case 3 -> System.out.println("忘记密码");
+                case 4 -> {
+                    System.out.println("系统退出");
+                    System.exit(0);
+                }
+                default -> System.out.println("重新输入");
+            }
+        }
     }
 
     //注册
@@ -43,6 +52,11 @@ public class UserNameDemo {
         }
         if (count == 0) {
             System.out.println("不能使用纯数字");
+            return;
+        }
+        int index = nameinof(users, username);
+        if (index >= 0) {
+            System.out.println("用户名重复，请重新输入");
             return;
         }
         System.out.println("输入密码：");
@@ -81,7 +95,7 @@ public class UserNameDemo {
         System.out.print("输入用户名：");
         String username = sc.next();
         int index = nameinof(users, username);
-        if(index==-1){
+        if (index == -1) {
             System.out.println("账号不存在，请注册");
             return;
         }
@@ -90,48 +104,74 @@ public class UserNameDemo {
         for (int i = 0; i < 3; i++) {
             System.out.print("输入密码：");
             String password = sc.next();
-            if (users.get(index).getPassword().equals(password)){
+            if (users.get(index).getPassword().equals(password)) {
                 System.out.println();
                 break;
-            }else {
-                if(i==2){
+            } else {
+                if (i == 2) {
                     System.out.println("密码错误次数过多，稍等再试");
                     return;
                 }
-                System.out.println("请输入正确的密码，您还有"+(2-i)+"次机会。");
+                System.out.println("请输入正确的密码，您还有" + (2 - i) + "次机会。");
             }
         }
         //获取一个验证码，随机
         //
         Random random = new Random();
-        char[] chars={'Q','W','E','R','T','Y','U','I','O','P','A','S','D','F','G','H','J','K','L','Z','X','C','V','B','N','M','q','w','e','r','t','y','u','i','o','p','a','s','d','f','g','h','j','k','l','z','x','c','v','b','n','m','1','2','3','4','5','6','7','8','9','0'};
-        yanzheng:while (true){
-        StringBuilder sb = new StringBuilder();
-        for (int i = 0; i < 5; i++) {
-            int i1 = random.nextInt(chars.length);
-            sb.append(chars[i1]);
-        }
-        String yzm = sb.toString();
-        System.out.println("验证码是："+yzm);
-        //录入验证码
-        System.out.print("请输入验证码：");
-        String yzm2=sc.next();
-        if (yzm.equals(yzm2)){
-            break yanzheng;
-        }else {
-            System.out.println("验证码错误,重新输入");
-        }
+        char[] chars = {'Q', 'W', 'E', 'R', 'T', 'Y', 'U', 'I', 'O', 'P', 'A', 'S', 'D', 'F', 'G', 'H', 'J', 'K', 'L', 'Z', 'X', 'C', 'V', 'B', 'N', 'M', 'q', 'w', 'e', 'r', 't', 'y', 'u', 'i', 'o', 'p', 'a', 's', 'd', 'f', 'g', 'h', 'j', 'k', 'l', 'z', 'x', 'c', 'v', 'b', 'n', 'm', '1', '2', '3', '4', '5', '6', '7', '8', '9', '0'};
+        yanzheng:
+        while (true) {
+            StringBuilder sb = new StringBuilder();
+            for (int i = 0; i < 5; i++) {
+                int i1 = random.nextInt(chars.length);
+                sb.append(chars[i1]);
+            }
+            String yzm = sb.toString();
+            System.out.println("验证码是：" + yzm);
+            //录入验证码
+            System.out.print("请输入验证码：");
+            String yzm2 = sc.next();
+            if (yzm.equals(yzm2)) {
+                break yanzheng;
+            } else {
+                System.out.println("验证码错误,重新输入");
+            }
         }
         //登录成功
         System.out.println("登录成功！");
     }
-    //忘记密码
 
-    //1.录入用户名，如果不存在提示未注册
-    //
-    //2.验证身份证号和手机号，
-    //
-    //3.输入密码
+    //忘记密码
+    public static void setPassword(ArrayList<User> users) {
+        //1.录入用户名，如果不存在提示未注册
+        //
+        Scanner sc = new Scanner(System.in);
+        System.out.print("输入用户名：");
+        String username = sc.next();
+        int index = nameinof(users, username);
+        if (index == -1) {
+            System.out.println("账号不存在，请注册");
+            return;
+        }
+        //2.验证身份证号和手机号，
+        //
+        System.out.print("Please input personid：");
+        String personid1 = sc.next();
+        System.out.print("Please input PhoneNumber：");
+        String PhoneNumber1 = sc.next();
+        String personid = users.get(index).getPersonid();
+        String PhoneNumber = users.get(index).getPhoneNumber();
+        if (personid.equals(personid1) && PhoneNumber.equals(PhoneNumber1)) {
+            System.out.println("验证通过，请输入密码");
+        } else {
+            System.out.println("验证失败，请重试");
+            return;
+        }
+
+        //3.输入密码
+        users.get(index).setPassword(sc.next());
+
+    }
 
     //手机号格式判断
     public static boolean number(String phonenumber) {
@@ -158,6 +198,7 @@ public class UserNameDemo {
         }
         return true;
     }
+
     //判断字符串再集合中是否存在，存在返回索引，不存在返回-1
     public static int nameinof(ArrayList<User> users, String name) {
         for (int i = 0; i < users.size(); i++) {
@@ -167,6 +208,7 @@ public class UserNameDemo {
         }
         return -1;
     }
+
     //身份证号格式判断
     public static boolean idNum(String id) {
         if (id == null) {

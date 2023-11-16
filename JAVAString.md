@@ -603,4 +603,3 @@ public static boolean idNum(String id) {
 2.验证身份证号和手机号，
 
 3.输入密码
-
