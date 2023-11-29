@@ -17,7 +17,7 @@ public class UserNameDemo {
             switch (i) {
                 case 1 -> addname(users);
                 case 2 -> login(users);
-                case 3 -> System.out.println("忘记密码");
+                case 3 -> setPassword(users);
                 case 4 -> {
                     System.out.println("系统退出");
                     System.exit(0);
@@ -100,6 +100,7 @@ public class UserNameDemo {
         }
         User user = new User(username, password1, personid, phonenumber);
         users.add(user);
+        System.out.println("注册成功！");
     }
 
     //登录
@@ -133,9 +134,10 @@ public class UserNameDemo {
         //
         Random random = new Random();
         char[] chars = {'Q', 'W', 'E', 'R', 'T', 'Y', 'U', 'I', 'O', 'P', 'A', 'S', 'D', 'F', 'G', 'H', 'J', 'K', 'L', 'Z', 'X', 'C', 'V', 'B', 'N', 'M', 'q', 'w', 'e', 'r', 't', 'y', 'u', 'i', 'o', 'p', 'a', 's', 'd', 'f', 'g', 'h', 'j', 'k', 'l', 'z', 'x', 'c', 'v', 'b', 'n', 'm', '1', '2', '3', '4', '5', '6', '7', '8', '9', '0'};
+        StringBuilder sb = new StringBuilder();
+
         yanzheng:
         while (true) {
-            StringBuilder sb = new StringBuilder();
             for (int i = 0; i < 5; i++) {
                 int i1 = random.nextInt(chars.length);
                 sb.append(chars[i1]);
@@ -252,5 +254,14 @@ public class UserNameDemo {
             }
         }
         return true;
+    }
+
+    //获取验证码
+    public static void getCode(){
+        ArrayList<Character> chats = new ArrayList<>();
+        for (int i = 0; i < 26; i++) {
+
+        }
+
     }
 }
