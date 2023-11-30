@@ -1,8 +1,10 @@
 package com.StudentSystemPlus;
 
 import com.StudentSystem.Student;
+import com.StudentSystem.StudentDemo;
 
 import java.util.ArrayList;
+import java.util.Queue;
 import java.util.Random;
 import java.util.Scanner;
 
@@ -119,8 +121,18 @@ public class UserNameDemo {
         for (int i = 0; i < 3; i++) {
             System.out.print("输入密码：");
             String password = sc.next();
+            //获取一个验证码，随机
+            String code = getCode();
+            System.out.println("验证码是：" + code);
+            //录入验证码
+            System.out.print("请输入验证码：");
+            String yzm2 = sc.next();
+            if (code.equalsIgnoreCase(yzm2)) {
+                //验证成功则跳出循环
+            } else {
+                System.out.println("验证码错误,重新输入");
+            }
             if (users.get(index).getPassword().equals(password)) {
-                System.out.println();
                 break;
             } else {
                 if (i == 2) {
@@ -130,31 +142,13 @@ public class UserNameDemo {
                 System.out.println("请输入正确的密码，您还有" + (2 - i) + "次机会。");
             }
         }
-        //获取一个验证码，随机
-        //
-        Random random = new Random();
-        char[] chars = {'Q', 'W', 'E', 'R', 'T', 'Y', 'U', 'I', 'O', 'P', 'A', 'S', 'D', 'F', 'G', 'H', 'J', 'K', 'L', 'Z', 'X', 'C', 'V', 'B', 'N', 'M', 'q', 'w', 'e', 'r', 't', 'y', 'u', 'i', 'o', 'p', 'a', 's', 'd', 'f', 'g', 'h', 'j', 'k', 'l', 'z', 'x', 'c', 'v', 'b', 'n', 'm', '1', '2', '3', '4', '5', '6', '7', '8', '9', '0'};
-        StringBuilder sb = new StringBuilder();
 
-        yanzheng:
-        while (true) {
-            for (int i = 0; i < 5; i++) {
-                int i1 = random.nextInt(chars.length);
-                sb.append(chars[i1]);
-            }
-            String yzm = sb.toString();
-            System.out.println("验证码是：" + yzm);
-            //录入验证码
-            System.out.print("请输入验证码：");
-            String yzm2 = sc.next();
-            if (yzm.equals(yzm2)) {
-                break yanzheng;
-            } else {
-                System.out.println("验证码错误,重新输入");
-            }
-        }
         //登录成功
         System.out.println("登录成功！");
+        //创建对象，启动方法。
+        StudentDemo sd = new StudentDemo();
+        sd.startSystem();
+
     }
 
     //忘记密码
@@ -177,15 +171,26 @@ public class UserNameDemo {
         String PhoneNumber1 = sc.next();
         String personid = users.get(index).getPersonid();
         String PhoneNumber = users.get(index).getPhoneNumber();
-        if (personid.equals(personid1) && PhoneNumber.equals(PhoneNumber1)) {
-            System.out.println("验证通过，请输入密码");
-        } else {
+        if (!(personid.equalsIgnoreCase(personid1) && PhoneNumber.equals(PhoneNumber1))) {
             System.out.println("验证失败，请重试");
             return;
         }
-
+        String password;
+        while (true) {
+            System.out.print("验证通过，请输入新密码:");
+             password = sc.next();
+            System.out.print("请再次输入密码：");
+            String againpassword = sc.next();
+            if (password.equals(againpassword)){
+                break;
+            }else {
+                System.out.println("两次密码不一致，请重新输入；");
+                continue;
+            }
+        }
         //3.输入密码
-        users.get(index).setPassword(sc.next());
+        users.get(index).setPassword(password);
+
 
     }
 
@@ -257,11 +262,30 @@ public class UserNameDemo {
     }
 
     //获取验证码
-    public static void getCode(){
+    public static String getCode() {
         ArrayList<Character> chats = new ArrayList<>();
         for (int i = 0; i < 26; i++) {
-
+            chats.add((char) ('a' + i));
+            chats.add((char) ('A' + i));
+        }
+        StringBuilder sb = new StringBuilder();
+        Random random = new Random();
+        for (int i = 0; i < 4; i++) {
+            int i1 = random.nextInt(chats.size());
+            sb.append(chats.get(i1));
         }
 
+        //任意位置添加数字
+        int i = random.nextInt(10);
+        sb.append(i);
+        char[] charArray = sb.toString().toCharArray();
+        //随机索引
+        int randomindex = random.nextInt(charArray.length);
+        char c = charArray[randomindex];
+        //char c1 = charArray[charArray.length];
+        charArray[randomindex] = charArray[charArray.length - 1];
+        charArray[charArray.length - 1] = c;
+
+        return new String(charArray);
     }
 }

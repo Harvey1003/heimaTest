@@ -5,11 +5,12 @@ import java.util.Random;
 
 public class test {
     public static void main(String[] args) {
-        getCode();
+        String code = getCode();
+        System.out.println(code);
     }
 
     //
-    public static void getCode(){
+    public static String getCode(){
         ArrayList<Character> chats = new ArrayList<>();
         for (int i = 0; i < 26; i++) {
             chats.add((char)('a' + i));
@@ -21,7 +22,21 @@ public class test {
             int i1 = random.nextInt(chats.size());
             sb.append(chats.get(i1));
         }
-        String code = sb.toString();
-        System.out.println(code);
+
+        //任意位置添加数字
+        int i = random.nextInt(10);
+        sb.append(i);
+        char[] charArray = sb.toString().toCharArray();
+        //随机索引
+        int randomindex = random.nextInt(charArray.length);
+        char c = charArray[randomindex];
+        //char c1 = charArray[charArray.length];
+        charArray[randomindex]=charArray[charArray.length-1];
+        charArray[charArray.length-1]=c;
+
+        return new String(charArray);
     }
+
+    //判断用户是否存在。
+   // private static void checkUserinfo(ArrayList<> users,User userinof){}
 }

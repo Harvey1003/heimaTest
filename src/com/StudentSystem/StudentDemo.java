@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 public class StudentDemo {
-    public static void main(String[] args) {
+    public static void startSystem() {
         ArrayList<Student> students = new ArrayList<>();
 
         //给循环命名 指定跳出
