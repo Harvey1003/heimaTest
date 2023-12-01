@@ -798,7 +798,7 @@ public static boolean idNum(String id) {
 
 # 面向对象
 
-## static静态
+## 1.static静态
 
 #### 1.静态变量
 
@@ -840,17 +840,110 @@ JavaBean类用来描述一些事务的类。比如，student，dog，cat等；
 
 静态方法中没有this关键字。
 
+## 2.封装
 
+## 3.继承
 
+#### 1.什么时候用继承?
 
+类跟类之间存在相同的内容，并满足子类是父类中的一种，就可以考虑继承。
 
+#### 2.继承的特点
 
+Java只支持单继承，不支持多继承，但支持多层继承（间接父类：父类的父类）。
 
+Java中所有的类都直接或间接继承Object类。
 
+子类只能继承父类中非私有的成员（public）。
 
+#### 3.子类能继承父类中的哪些内容？
 
+|          | 非私有 | private      |
+| -------- | ------ | ------------ |
+| 构造方法 | 不能   | 不能         |
+| 成员变量 | 能     | 能（能继承） |
+| 成员方法 | 能     | 不能         |
 
+父类中的私有成员变量，不能直接调用。需要用get、set
 
+#### 4.成员变量的访问特点
 
+1.就近原则：先在局部位置找，本类成员位置找，父类成员位置找，逐级往上。
 
+2.如果遇到重名的情况，this、super
+
+```java
+public class fu{
+    String name="fu";
+}
+class zi extends fu{
+    String name="zi";
+    public void ziShow(){
+        String name="ziShow";
+        System.out.println(name);//打印的"ziShow"
+        System.out.println(this.name);//打印的"zi"，this调用局部变量
+        System.out.println(super.name);//打印的"fu"，super调用父类中的成员变量
+    }
+}
+
+```
+
+#### 5.方法的重写：
+
+1.当父类的方法不能满足子类的需求时，需要进行方法重写。
+
+2.重写的要求：
+
+​	重写的方法与父类方法命名、形参列表必须一致；
+
+​	子类访问权限必须大于等于父类；
+
+​	子类返回值类型必须小于等于父类；
+
+​	尽量保持一致；
+
+​	只有被添加到虚方法表中的方法才能被重写（私有的方法不能）。
+
+3.@Override重写注解
+
+4.如果发生了重写，则会覆盖（虚方法表里的方法会被覆盖），影响本类和后面的子类，不影响父类。
+
+#### 6.构造方法的访问特点
+
+1.子类不能继承父类的构造方法，但是可以通过super调用；
+
+2.子类构造方法第一行有个默认的super()，调用的是父类的空参构造；
+
+3.默认先访问父类中无参的构造方法，再执行自己的；
+
+4.如果想要访问父类有参构造，必须手动书写。
+
+```java
+public class test {
+    String name;
+    int age;
+    public test() {
+    }
+
+    public test(String name, int age) {
+        this.name = name;
+        this.age = age;
+    }
+}
+
+class ziclass extends test {
+    public ziclass() {
+        //默认访问父类空参，可不写
+        super();
+    }
+
+    public ziclass(String name, int age) {
+        super(name, age);
+    }
+}
+```
+
+#### this、super使用总结
+
+this：理解为一个变量，表示当前方法调用者的地址值；
 
