@@ -1,4 +1,4 @@
-package com.heima.oop.interfaceDemo;
+package com.heima.oop.interfaceDemo.a01;
 
 public class Sheep extends Animal {
     public Sheep(String name, int age) {

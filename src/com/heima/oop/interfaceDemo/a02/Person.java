@@ -1,17 +1,15 @@
-package com.heima.oop.interfaceDemo;
+package com.heima.oop.interfaceDemo.a02;
 
-public abstract class Animal {
+public class Person {
     private String name;
-    private int age;
+    private  int age;
 
-    public abstract void eat();
-
-    public Animal(String name, int age) {
-        this.name = name;
-        this.age = age;
+    public Person() {
     }
 
-    public Animal() {
+    public Person(String name, int age) {
+        this.name = name;
+        this.age = age;
     }
 
     public String getName() {

@@ -1,6 +1,6 @@
 package com.heima.oop.abstractDemo.a01;
 
-import com.heima.oop.interfaceDemo.Swim;
+import com.heima.oop.interfaceDemo.a01.Swim;
 
 public class Dog extends Animal implements Swim {
     public Dog(String name, int age) {
