@@ -1300,12 +1300,50 @@ Outer.staticInner.show2();
 
 #### 5.匿名内部类
 
-1. 匿名内部就是隐藏了名字的内部类
+1. 匿名内部就是隐藏了名字的内部类,可以写在成员位置，也可以写在局部位置
 
 2. 格式： 
 
    ```java
-   
+   new 类名或接口名(){
+       //重写方法；
+   };
    ```
 
-3. 
+3. 格式的细节
+
+   包含了继承或实现，方法重写，创建对象。
+
+   整体就是一个类的子类对象或者接口的实现类对象。
+
+   ```java
+   new Swim() {
+       @Override
+       public void swim() {
+           System.out.println("重写的游泳接口");
+       }
+   };
+   //可以赋值，可以直接调用
+   Swim s= new Swim() {
+               @Override
+               public void swim() {
+                   System.out.println("重写的游泳接口");
+               }
+           };
+          s.swim();
+   //
+    new Swim() {
+               @Override
+               public void swim() {
+                   System.out.println("重写的游泳接口");
+               }
+           }.swim();
+   ```
+
+4. 使用场景
+
+   当方法的参数是接口或者是类的时候，以接口为例，可以传递这个接口的实现类对象，
+
+   如果实现类只要使用一次，就可以用匿名内部类简化代码。
+
+   

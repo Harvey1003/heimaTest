@@ -13,7 +13,12 @@ public class test {
 
 
         //匿名内部类
-
+        new Swim() {
+            @Override
+            public void swim() {
+                System.out.println("重写的游泳接口");
+            }
+        }.swim();
 
     }
 }
