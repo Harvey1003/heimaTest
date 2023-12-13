@@ -1347,3 +1347,116 @@ Outer.staticInner.show2();
    如果实现类只要使用一次，就可以用匿名内部类简化代码。
 
    
+
+# Math
+
+1. 水仙花数，四个
+
+   ```java
+       public static void main(String[] args) {
+           int count = 0;
+           for (int i = 100; i < 999; i++) {
+               int ge = i % 10;
+               int shi = i / 10 % 10;
+               int bai = i / 100 % 10;
+               double num = Math.pow(ge, 3) + Math.pow(shi, 3) + Math.pow(bai, 3);
+               if (i == num) {
+                   count++;
+                   System.out.println(num);
+               }
+           }
+           System.out.println(count);
+       }
+   ```
+
+2. 四叶玫瑰数，三个
+
+   ```java
+       public static void main(String[] args) {
+           int count = 0;
+           for (int i = 1000; i < 9999; i++) {
+               int ge = i % 10;
+               int shi = i / 10 % 10;
+               int bai = i / 100 % 10;
+               int qian = i / 1000 % 10;
+               double num = Math.pow(ge, 4) + Math.pow(shi, 4) + Math.pow(bai, 4)+Math.pow(qian,4);
+               if (i == num) {
+                   count++;
+                   System.out.println(num);
+               }
+           }
+           System.out.println(count);
+       }
+   ```
+
+   
+
+# System
+
+工具类，提供与系统相关的方法。
+
+```java
+System.exit();//
+System.currentTimeMillis();//获取当期时间的毫秒差
+System.arraycopy(1,2,3,4,5);
+//1,数据源数组；2，从数据源数组中的第几个索引开始拷贝；3，目的地数组；4，目的地数组开始的索引；5，拷贝的个数
+
+```
+
+# Runtime
+
+```java
+//如果打印一个对象，想要看到属性值的话，那么就重写toString方法。在重写方法中把对象的属性值进行拼接。
+
+```
+
+# Object
+
+### 1.toString()
+
+如果想要打印对象内部的属性自，可以在javabean中重写toString方法
+
+```java
+@override
+public String toString() {
+    return "Student{name = " + name + ", age = " + age + ", gender = " + gender + ", score = " + printString(score) + "}";
+}
+```
+
+### 2.equals()
+
+1. 
+2. 如果没有重写equals方法，默认使用父类Object中的方法比较，比较的是地址值。
+3. Alt+Insert一键生成重写equals方法。
+4. String中的equals方法是先判断是否为字符串，如果是再比较内部属性，如果不是直接返回false。
+5. 调用equals方法：以调用者中的equals方法为准。
+
+### 3.clone()
+
+默认是浅克隆，如果需要深克隆需要重写方法或者使用第三方工具类。
+
+```java
+Student s1 = new Student("ydd",22,"man",score);
+System.out.println(s1);
+
+//浅拷贝：拷贝地址值，不管内部的基本数据类型、引用数据类型都会拷贝地址值，引用数据类型（new的）中改变被拷贝的改变会影响原对象。
+//浅拷贝：基本数据类型拷贝，字符串复用，引用数据类型全部重新创建新的。
+
+//第三方工具，深拷贝方法，Object中的Clone方法是浅拷贝
+Gson gson = new Gson();
+//把对象变成字符串
+String s = gson.toJson(s1);
+//再把字符串变成一个对象，传给新的对象
+Student s2 = gson.fromJson(s, Student.class);
+System.out.println(s2);
+```
+
+# Objects
+
+### 1.equals()
+
+### 2.isNull()
+
+### 3.nonNull()
+
+# BigInteger
