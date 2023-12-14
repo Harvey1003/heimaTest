@@ -1348,7 +1348,9 @@ Outer.staticInner.show2();
 
    
 
-# Math
+# 常用API
+
+## Math
 
 1. 水仙花数，四个
 
@@ -1391,7 +1393,7 @@ Outer.staticInner.show2();
 
    
 
-# System
+## System
 
 工具类，提供与系统相关的方法。
 
@@ -1403,14 +1405,14 @@ System.arraycopy(1,2,3,4,5);
 
 ```
 
-# Runtime
+## Runtime
 
 ```java
 //如果打印一个对象，想要看到属性值的话，那么就重写toString方法。在重写方法中把对象的属性值进行拼接。
 
 ```
 
-# Object
+## Object
 
 ### 1.toString()
 
@@ -1451,7 +1453,7 @@ Student s2 = gson.fromJson(s, Student.class);
 System.out.println(s2);
 ```
 
-# Objects
+## Objects
 
 ### 1.equals()
 
@@ -1459,4 +1461,74 @@ System.out.println(s2);
 
 ### 3.nonNull()
 
-# BigInteger
+## BigInteger
+
+Biglnteger表示一个大整数。
+
+1. 如何获取Biglnteger的对象?
+
+   Biglnteger b1 = Biglnteger.valueof(0.1);
+
+   Biglnteger b1 = new Biglnteger("整数");
+
+2. 常见操作方法:
+
+   加:add
+
+   乘: multiply
+
+   减: subtract
+
+   除: divide、divideAndRemainder
+
+   比较: equals、max、min
+
+   次幂: pow
+
+   转成整数: intValue、longValue
+
+## BigDecima
+
+1. Biglnteger表示一个大整数。
+
+2. 如何获取Biglnteger的对象?
+
+   ```java
+   Biglnteger b1 = Biglnteger.valueof(0.1);
+   
+   Biglnteger b1 = new Biglnteger("整数");
+   ```
+
+   
+
+3. 常见操作
+
+   加:add
+
+   乘: multiply
+
+   减: subtract
+
+   除: divide、divideAndRemainder
+
+   比较: equals、max、min
+
+   次幂: pow
+
+   转成整数: intValue、longValue
+
+## 正则表达式（Regex）
+
+校验字符串。
+
+作用：1.校验字符串，2.在一段文本中查找满足要求的内容（爬虫）。
+
+| 预定义字符类 |                                                   |
+| ------------ | ------------------------------------------------- |
+| `.`          | 任何字符（与[行结束符](#lt)可能匹配也可能不匹配） |
+| `\d`         | 数字：`[0-9]`                                     |
+| `\D`         | 非数字： `[^0-9]`                                 |
+| `\s`         | 空白字符：`[ \t\n\x0B\f\r]`                       |
+| `\S`         | 非空白字符：`[^\s]`                               |
+| `\w`         | 单词字符：`[a-zA-Z_0-9]`                          |
+| `\W`         | 非单词字符：`[^\w]`                               |
