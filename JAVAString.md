@@ -1521,7 +1521,9 @@ Biglnteger表示一个大整数。
 
 校验字符串。
 
-作用：1.校验字符串，2.在一段文本中查找满足要求的内容（爬虫）。
+#### 1.作用
+
+1.校验字符串（AnyRule插件，API文档）
 
 | 预定义字符类 |                                                   |
 | ------------ | ------------------------------------------------- |
@@ -1532,3 +1534,197 @@ Biglnteger表示一个大整数。
 | `\S`         | 非空白字符：`[^\s]`                               |
 | `\w`         | 单词字符：`[a-zA-Z_0-9]`                          |
 | `\W`         | 非单词字符：`[^\w]`                               |
+
+2.在一段文本中查找满足要求的内容（爬虫）
+
+```java
+String str = "java自Java11？？？？java8";
+//获取正则表达式的对象
+Pattern p = Pattern.compile("(?i)java\\d{0,2}");
+//获取文本匹配器的对象
+//拿着m读取str中符合p规则的字符串
+Matcher m = p.matcher(str);
+while (m.find()){//能找到返回ture
+    System.out.println(m.group());//返回的符合规则的字符串
+}
+```
+
+```java
+		//需求:把下面文本中的电话，邮箱，手机号，热线都爬取出来,来黑马程序员学习java,
+        //电话:18512516758，18512508907
+        //或者联系邮箱:boniu@itcast.cn
+        //座机电话:01036517895,010-98951256
+        //邮箱:bozai@itcast.cn,
+        //热线电话:400-618-9090，400-618-4000，4006184000，4006189090
+       String str="电话:18512516758，18512508907或者联系邮箱:boniu@itcast.cn邮箱:bozai@itcast.cn,座机电话:01036517895,010-98951256,热线电话:400-618-9090，400-618-4000，4006184000，4006189090";
+        String gex="(1[^2]\\d{9})|(\\w{1,}@[\\w^_]{3,}\\.[cn]{2,})|(400-?\\d{3}-?\\d{4})|(010-?\\d{8})";
+        Matcher m = Pattern.compile(gex).matcher(str);
+        while (m.find()){
+            System.out.println(m.group());
+        }
+```
+
+#### 2.贪婪和非贪婪爬取
+
+java默认贪婪爬取（尽可能多获取），如果再数量词+*的后面加？，就是非贪婪爬取（尽可能少获取）。
+
+#### 3.正则表达式在字符串方法中的使用
+
+1. matches()
+
+2. replaceAll()
+
+   ```java
+   //按照正则表达式的规则进行替换
+   String s="小诗诗dqwefqwfqwfwq12312小丹丹dqwefqwfqwfwq12312小惠惠";
+   String vs = s.replaceAll("[a-zA-Z0-9]+", "vs");
+   System.out.println(vs);
+   ```
+
+3. split()
+
+   ```java
+   //按照正则表达式的规则切割字符串
+   String[] split = s.split("[a-zA-Z0-9]+");
+   for (int i = 0; i < split.length; i++) {
+       System.out.println(split[i]);
+   }
+   ```
+
+#### 4.捕获组号
+
+组号: 表示把第X组的内容再出来用一次;
+
+1. 正则内部使用组号：\\x把第x组的内容再用一次。
+
+   ```java
+   //需求1: 判断一个字符串的开始字符和结束字符是否一致? 只考虑一个字符
+   //举例:&abc& ,a123b,, a123a, b456b,17891
+   String regex1="(.).+\\1";
+   System.out.println("&abc&".matches(regex1));
+   System.out.println("a123a".matches(regex1));
+   System.out.println("b456b".matches(regex1));
+   
+   //需求2:判断一个字符串的开始部分和结束部分是否一致?可以有多个字符
+   //举例:abc123abc b456b 123789123
+   String regex2="(.+).+\\1";
+   System.out.println("abc123abc".matches(regex2));
+   System.out.println("b456b".matches(regex2));
+   System.out.println("123789123".matches(regex2));
+   
+   //需求3:判断一个字符串的开始部分和结束部分是否一致? 开始部分内部每个字符也需要一致
+   //举例:&&abc&&,aaa123aaa,bbb456bbb,111789111
+   String regex3="((.){3}).+\\1";//((.)\2*).+\1
+   System.out.println("aaaa123aaa".matches(regex3));
+   System.out.println("bbb456bba".matches(regex3));
+   System.out.println("111789111".matches(regex3));
+   ```
+
+2. 正则外部使用组号：$x
+
+   ```java
+   //去重复
+   String str="我要学学学学编编编编编编编编编编编编编程程程程程程程程程程程";
+   System.out.println(str.replaceAll("(.)\\1+", "$1"));//
+   ```
+   
+
+#### 5.非捕获分组
+
+分组之后不需要再用本组数据，仅仅是把数据括起来。
+
+非捕获组
+
+| `(?:`*X*`)`  | *X*，作为非捕获                |
+| :----------- | ------------------------------ |
+| `(?=`*X*`)`  | *X*，通过零宽度的正 lookahead  |
+| `(?!`*X*`)`  | *X*，通过零宽度的负 lookahead  |
+| `(?<=`*X*`)` | *X*，通过零宽度的正 lookbehind |
+
+```java
+/*需求1: 爬取版本号为8,11,17的Java文本，但是只要Java不显示版本号
+  需求2: 爬取版本号为8,11,17的Java文本。正确爬取结果:Java8 Java1 Java17 Java17
+  需求3: 爬取除了版本号为8,11,17的Java文本，
+*/
+String s = "java自从95年问世以来，经历了很多版本 目前企业中用的最多的是Java8和JAva11因为这两个是长期支持版本下一个长期支持 版本是JAVa17相信在未来不久JAVA17也会逐渐登上历史舞台";
+//1.定义正则表达式
+//?理解为前面的数据Java
+//=表示在Java后面要跟随的数据
+//但是在获取的时候，只获取前半部分
+String gex1 = "(?i)java(?=8|11|17)";
+String gex2 = "(?i)java(8|11|17)";//((?i)java)(?:8|11|17)
+String gex3 = "(?i)java(?!8|11|17)";//(?i)java(?:8|11|17)
+Matcher m1 = Pattern.compile(gex1).matcher(s);
+Matcher m2 = Pattern.compile(gex2).matcher(s);
+Matcher m3 = Pattern.compile(gex3).matcher(s);
+while (m1.find()) {
+    System.out.println(m1.group());
+}
+System.out.println("======================");
+while (m2.find()) {
+    System.out.println(m2.group());
+}
+System.out.println("======================");
+while (m3.find()) {
+    System.out.println(m3.group());
+
+}
+System.out.println("======================");
+```
+
+## 时间类
+
+#### Date
+
+1、如何创建日期对象?
+
+```java
+Date date = new Date();
+Date date = new Date(指定毫秒值);
+```
+
+2、如何修改时间对象中的毫秒值
+
+```java
+setTime(毫秒值);
+```
+
+3、如何获取时间对象中的毫秒值
+
+```java
+getTime();
+```
+
+#### SimpleDateFormat
+
+解析，格式化
+
+```java
+//
+    String str="2000年10月03日 00:00:00";
+    SimpleDateFormat sdf2 = new SimpleDateFormat("yyyy年MM月dd日 HH:mm:ss");
+    Date d = null;
+    try {
+        d = sdf2.parse(str);
+    } catch (ParseException e) {
+        throw new RuntimeException(e);
+    }
+    System.out.println(d.getTime());
+}
+```
+
+#### calender
+
+```java
+Calendar c = Calendar.getInstance();
+Date d = new Date(0l);
+c.setTime(d);
+System.out.prin
+//public int get(int field)取日期中的某个字段信息
+//0-16个索引，  
+int year = c.get(Calendar.YEAR);
+int month = c.get(Calendar.MO
+//public void set(int field,int value)修改日历
+//public void add(int field,int amount)为某个字段增加/减少指定的值
+```
+
