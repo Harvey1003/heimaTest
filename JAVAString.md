@@ -1715,16 +1715,146 @@ getTime();
 
 #### calender
 
+表示一个时间的日历对象
+
 ```java
 Calendar c = Calendar.getInstance();
-Date d = new Date(0l);
-c.setTime(d);
-System.out.prin
-//public int get(int field)取日期中的某个字段信息
-//0-16个索引，  
-int year = c.get(Calendar.YEAR);
-int month = c.get(Calendar.MO
-//public void set(int field,int value)修改日历
-//public void add(int field,int amount)为某个字段增加/减少指定的值
+ Date d = new Date(0l);
+ c.setTime(d);
+ System.out.println(c);
+ //public int get(int field)取日期中的某个字段信息
+ //0-16个索引，  
+ int year = c.get(Calendar.YEAR);
+ int month = c.get(Calendar.MON
+ //public void set(int field,int value)修改日历的某个字段信息
+ c.set(Calendar.YEAR,2000);//
+ c.set(Calendar.MONTH,9);//10月
+ c.set(Calendar.DAY_OF_MON
+ //public void add(int field,int amount)为某个字段增加/减少指定的值
+ c.add(Calendar.MONTH,-1);//减一个月
+ System.out.println(year);
+ System.out.println(month);
+    }
 ```
+
+## JDK8的新增时间类
+
+now现在的时间，of添加指定时间，with修改，min减少，plus增加
+
+#### Date类：
+
+1. zoneId：时区，获取Java中支持的时区；获取系统默认时区；获取制定时区。
+
+2. Instant：时间戳，
+
+   ```java
+   //static Instant now()获取当前时间的Instant对象 (标准时间)
+   Instant now = Instant.now();
+   System.out.println(now);
+   //static Instant ofXxxx(long epochMilli)根据(秒/毫秒/纳秒) 获取Instant对象
+   Instant instant1 = Instant.ofEpochMilli(1L);
+   System.out.println(instant1);
+   //ZonedDateTime atZone(ZoneId zone)指定时区
+   ZonedDateTime time = Instant.now().atZone(ZoneId.of("Asia/Shanghai"));
+   System.out.println(time);
+   //boolean isXxx(Instant otherInstant)判断系列的方法
+   Instant instant2 = Instant.ofEpochMilli(1000L);
+   //判断调用者的时间是否在参数的前面
+   System.out.println(instant1.isBefore(instant2));
+   //判断调用者的时间是否在参数的后面
+   System.out.println(instant1.isAfter(instant2));
+   
+   //Instant minusXxx(long millisToSubtract)减少时间系列的方法
+   //减100秒
+   instant2.minusMillis(100L);
+   
+   //Instant plusXxx(long millisToSubtract)增加时间系列的方法
+   ```
+
+3. ZonedDateTime：带时区的时间
+
+   with修改，min减少，plus增加
+
+#### 时间格式化类
+
+DateTimeFormatter：时间格式化，解析，类似SimpleDateFormat。
+
+#### 日历类
+
+LocaDate（年月）、LocalTime（时分秒）、LocalDateTime（年月日时分秒）日历对象
+
+#### 工具类
+
+1. Duration：时间间隔（秒，纳秒）
+2. Period：时间间隔（年月日）
+3. ChronoUnit.单位（年月日时分秒）.between(时间1，时间2)；
+
+```java
+LocalDateTime today = LocalDateTime.now();
+LocalDateTime birthday = LocalDateTime.of(2000, 10, 3, 0, 0, 0);
+System.out.println("相差的年份"+ChronoUnit.YEARS.between(birthday, today));
+```
+
+## 包装类
+
+#### 1.什么是包装类?
+
+ 基本数据类型对应的对象
+
+#### 2.JDK5以后对包装类新增了什么特性?
+
+ 自动装箱、自动拆箱
+
+#### 3.我们以后如何获取包装类对象?
+
+ 不需要new，不需要调用方法，直接赋值即可
+
+#### 4.常用方法
+
+```java
+/*public static string toBinaryString(int i)得到二进制
+public static string tooctalstring(int i)得到八进制
+public static string toHexString(int i)得到十六进制
+public static int parseInt(string s)将字符串类型的整数转成int类型的整数
+ 1.在基本类型转换时，参数只能是数字。
+ 2.8种包种类中，除了Character都有对应的parseXX的方法，进行类型转换。
+*/
+//键盘录入改进
+Scanner sc = new Scanner(System.in);
+String s = sc.nextLine();
+int i = Integer.parseInt(s);
+System.out.println(i);
+```
+
+## 综合练习
+
+## 算法和Lambda
+
+1. 基本查找
+
+   ```java
+   //1,基本查找，不考虑重复
+   public static int basic1(int[] arr, int num) {
+       for (int i = 0; i < arr.length; i++) {
+           if (arr[i] == num) {
+               return i;
+           }
+       }
+       return -1;
+   }
+   //2基本查找，考虑重复
+   public static ArrayList<Integer> basic2(int[] arr, int num) {
+       ArrayList<Integer> list = new ArrayList<>();
+       for (int i = 0; i < arr.length; i++) {
+           if (arr[i] == num) {
+               list.add(i);
+           }
+       }
+       return list;
+   }
+   ```
+
+2. 二分查找
+
+3. 分块查找
 
