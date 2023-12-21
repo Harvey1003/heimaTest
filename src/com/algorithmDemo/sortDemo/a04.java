@@ -1,4 +1,4 @@
-package com.sortDemo;
+package com.algorithmDemo.sortDemo;
 
 public class a04 {
     public static void main(String[] args) {

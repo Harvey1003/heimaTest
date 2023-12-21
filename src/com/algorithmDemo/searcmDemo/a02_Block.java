@@ -1,6 +1,5 @@
-package com.searcmDemo;
+package com.algorithmDemo.searcmDemo;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 public class a02_Block {

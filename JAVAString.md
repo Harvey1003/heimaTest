@@ -2064,7 +2064,7 @@ System.out.println(i);
 2. 选择排序
 
    核心思想:
-   1，从0索引开始比较，大的放右边，小的放左边。
+   1，从0索引往后依次开始比较，大的放右边，小的放左边。
 
    ```java
    int[] arr = {2, 5, 4, 1, 3};
@@ -2082,6 +2082,8 @@ System.out.println(i);
    
 
 3. 插入排序
+
+   数组先分为有序和无序两组，遍历无序数组，将元素插入到有序序列当中。
 
    ```java
    int[] arr = {3, 44, 38, 5, 47, 15, 36, 26, 27, 2};
@@ -2137,4 +2139,140 @@ System.out.println(i);
        }
    ```
 
+   快速排序：
+
+   1. 将排序范围第一个数字作为基准数，再定义两个变量start，end；
+   2. start从左往右找比基准数大的，end从右往左找比基准数小的；
+   3. 找到之后交换start，end指向的元素，并循环这个过程，知道start、end在同一个位置了，该位置就是放基准数的位置，让基准数归位
+   4. 基准数归位后，左边的比基准数小，右边的比基准数大。
+
+   ```java
+   public static void main(String[] args) {
+   int[] arr = {3, 44, 38, 5, 47, 15, 36, 26, 27, 2};
    
+           quickSort(arr, 0, arr.length - 1);
+          
+       }
+   
+   public static void quickSort(int[] arr, int i, int j) {
+           int start = i;
+           int end = j;
+           if (start > end) {
+               return;
+           }
+           int baseNum = arr[i];
+           //用end当索引，从右往左开始遍历，找到比基准书小的数停下
+           while (start != end) {
+               while (true) {
+                   if (end <= start || arr[end] < baseNum) {
+                       break;
+                   }
+                   end--;
+               }
+               //用strat当索引，从左往右开始遍历，找到比基准数大的停下
+               while (true) {
+                   if (start >= end || arr[start] > baseNum) {
+                       break;
+                   }
+                   start++;
+               }
+               //相互交换
+               int temp = arr[start];
+               arr[start] = arr[end];
+               arr[end] = temp;
+           }
+           //准基数归位
+           int temp = arr[i];
+           arr[i] = arr[end];
+           arr[end] = temp;
+   
+           quickSort(arr, i, start - 1);
+           quickSort(arr, start + 1, j);
+       }
+   ```
+
+#### Arrays
+
+```java
+//public static int binarySearch (数组，查找的元素)
+        //二分查找法查找元素
+        int[] arr={2,3,5,6,7,8};
+        System.out.println(Arrays.binarySearch(arr, 2));
+        //public static int[] copyof(原数组，新数组长度)拷贝数组
+
+        //public static int[] copyofRange(原数组，起始索引，结束索引)
+
+        //public static void fill(数组，元素)填充数组
+
+        //public static void sort(数组)按照默认方式进行数组排序
+
+        //public static void sort(数组，排序规则)按照指定的规则排序
+        Integer[] arr2={2,3,5,6,7,8};
+        Arrays.sort(arr2, new Comparator<Integer>() {
+            @Override
+            public int compare(Integer o1, Integer o2) {
+                return o2-o1;
+            }
+        });
+        //public static string toString(数组)
+        // 把数组拼接成一个字符串
+        System.out.println(Arrays.toString(arr2));
+```
+
+#### Lambda表达式
+
+1. 作用：简化函数式接口的匿名内部类的写法。
+2. 使用前提：必须是接口的匿名内部类，接口中有且仅有一个抽象方法。
+3. 好处：简洁，灵活，紧凑
+4. lambda的省略规则：
+   1.参数类型可以省略不写。
+   2.如果只有一个参数，参数类型可以省略，同时（）也可以省略。
+   3.如果Lambda表达式的方法体只有一行，大括号，分号，return可以省略不写，需要同时省略。
+
+```java
+Integer[] arr2={2,3,5,6,7,8};
+        
+        /*Arrays.sort(arr2, new Comparator<Integer>() {
+            @Override
+            public int compare(Integer o1, Integer o2) {
+                return o2-o1;
+            }
+        });*/
+        
+        //lambda表达式简化匿名内部类
+        Arrays.sort(arr2, (Integer o1, Integer o2)-> {
+                return o2-o1;
+            }
+        );
+		//最简化
+		Arrays.sort(arr2, ( o1, o2)-> o2-o1);
+//按照字符串的长度进行排序
+        String [] str={"aa","a","aaaa","aaa"};
+        Arrays.sort(str, ( o1,  o2)->  o1.length()-o2.length());
+```
+
+不死兔案例（裴波那契）
+
+```java
+public static void main(String[] args) {
+        //裴波那契(不死兔)
+        //1 1 2 3 5 8 13
+        //第一种方法
+        System.out.println(getSum(12));
+        int[] arr=new int[12];
+        arr[0]=1;
+        arr[1]=1;
+        for (int i = 2; i < arr.length; i++) {
+            arr[i]=arr[i-1]+arr[i-2];
+        }
+        System.out.println(Arrays.toString(arr));
+    }
+    //第二种方法，递归
+    public static int getSum(int month) {
+        if (month == 1 || month == 2) {
+            return 1;
+        }
+        return getSum(month - 1) + getSum(month - 2);
+    }
+```
+

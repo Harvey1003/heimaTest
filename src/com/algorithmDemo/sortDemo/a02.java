@@ -1,8 +1,6 @@
-package com.sortDemo;
+package com.algorithmDemo.sortDemo;
 
 import java.util.Random;
-
-import static com.sortDemo.a01.printArr;
 
 public class a02 {
     public static void main(String[] args) {

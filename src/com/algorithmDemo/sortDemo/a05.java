@@ -1,9 +1,6 @@
-package com.sortDemo;
+package com.algorithmDemo.sortDemo;
 
 import java.util.Random;
-import java.util.Scanner;
-
-import static com.sortDemo.a01.printArr;
 
 public class a05 {
     public static void main(String[] args) {

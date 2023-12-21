@@ -1,4 +1,4 @@
-package com.searcmDemo;
+package com.algorithmDemo.searcmDemo;
 
 import java.util.ArrayList;
 
