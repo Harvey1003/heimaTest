@@ -2061,10 +2061,80 @@ System.out.println(i);
 
    
 
-2. 排序
+2. 选择排序
 
-3. 排序
+   核心思想:
+   1，从0索引开始比较，大的放右边，小的放左边。
 
-4. 排序
+   ```java
+   int[] arr = {2, 5, 4, 1, 3};
+           for (int j = 0; j < arr.length - 1; j++) {
+               for (int i = 1 + j; i < arr.length; i++) {
+                   if (arr[j] > arr[i]) {
+                       int temp = arr[j];
+                       arr[j] = arr[i];
+                       arr[i] = temp;
+                   }
+               }
+           }
+   ```
+
+   
+
+3. 插入排序
+
+   ```java
+   int[] arr = {3, 44, 38, 5, 47, 15, 36, 26, 27, 2};
+           int startIndex = -1;
+           for (int i = 0; i < arr.length; i++) {
+               if (arr[i] > arr[i + 1]) {
+                   startIndex = i + 1;
+                   break;
+               }
+           }
+   
+           //从start开始遍历
+           for (int i = startIndex; i < arr.length; i++) {
+               int j = i;
+   
+               //把从start遍历到的从左往右更前面的比较，大了不动，小了交换位置，比较到0索引为止。
+               while (j > 0 && arr[j] < arr[j - 1]) {
+                   int temp = arr[j];
+                   arr[j] = arr[j - 1];
+                   arr[j - 1] = temp;
+                   //交换完位置后继续往前比较
+                   j--;
+               }
+           }
+   ```
+
+   
+
+4. 快速排序
+
+   递归算法：方法自己调用自己
+
+   ```java
+   public static void main(String[] args) {
+           System.out.println(getSum(100));
+       System.out.println(getJC(5));
+       }
+       //递归算法：
+       public static int getSum(int number){
+           //出口
+           if (number==1){
+               return 1;
+           }
+           return number+getSum(number-1);
+       }
+   //递归求阶乘
+       public static int getJC(int number){
+           if (number==1){
+               return 1;
+           }
+           return number*getJC(number-1);
+   
+       }
+   ```
 
    
