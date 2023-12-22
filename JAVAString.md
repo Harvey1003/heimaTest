@@ -2276,3 +2276,51 @@ public static void main(String[] args) {
     }
 ```
 
+## 集合
+
+collection：单列集合
+
+```java
+ /* 
+public boolean add(E e) 添加
+public void clear()清空
+public boolean remove(E e)删除
+public boolean contains(Object obj)判断是否包含
+public boolean isEmpty()判断是否为空
+public int size()集合长度
+ */
+```
+
+collection的遍历方式
+
+1. 迭代器遍历
+
+   ```java
+   //1.循环中只能用一次next方法
+   //2.迭代器遍历完毕指针不会复位
+   //3.报错NoSuchElementException
+   //4.遍历过程中不能添加删除元素
+   
+   Collection<String> coll = new ArrayList<>();
+           coll.add("aaa");
+           coll.add("bbb");
+           coll.add("ccc");
+           //创建迭代器对象
+           Iterator<String> it = coll.iterator();
+           //获取当前位置是否有元素，返回boolean
+           while (it.hasNext()) {
+               //获取当前指向的元素并移动指针
+               System.out.println(it.next());
+           }
+   ```
+
+   
+
+2. 增强for遍历
+
+   所有的单列集合和数组才能用
+
+   集合名字.for
+
+3. lambda
+
