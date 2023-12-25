@@ -2278,49 +2278,94 @@ public static void main(String[] args) {
 
 ## 集合
 
-collection：单列集合
+#### collection
 
-```java
- /* 
-public boolean add(E e) 添加
-public void clear()清空
-public boolean remove(E e)删除
-public boolean contains(Object obj)判断是否包含
-public boolean isEmpty()判断是否为空
-public int size()集合长度
- */
-```
+1. 单列集合的顶层接口，所有的方法被list和Set系列集合共享。
 
-collection的遍历方式
-
-1. 迭代器遍历
+2. 常见成员方法：
 
    ```java
-   //1.循环中只能用一次next方法
-   //2.迭代器遍历完毕指针不会复位
-   //3.报错NoSuchElementException
-   //4.遍历过程中不能添加删除元素
-   
-   Collection<String> coll = new ArrayList<>();
-           coll.add("aaa");
-           coll.add("bbb");
-           coll.add("ccc");
-           //创建迭代器对象
-           Iterator<String> it = coll.iterator();
-           //获取当前位置是否有元素，返回boolean
-           while (it.hasNext()) {
-               //获取当前指向的元素并移动指针
-               System.out.println(it.next());
-           }
+    /* 
+   public boolean add(E e) 添加
+   public void clear()清空
+   public boolean remove(E e)删除
+   public boolean contains(Object obj)判断是否包含
+   public boolean isEmpty()判断是否为空
+   public int size()集合长度
+    */
    ```
 
-   
+3. collection的遍历方式
 
-2. 增强for遍历
+- 迭代器遍历：在遍历过程中想要删除元素，请使用迭代器。
 
-   所有的单列集合和数组才能用
 
-   集合名字.for
+```java
+//1.循环中只能用一次next方法
+//2.迭代器遍历完毕指针不会复位
+//3.报错NoSuchElementException
+//4.遍历过程中不能添加删除元素
 
-3. lambda
+Collection<String> coll = new ArrayList<>();
+        coll.add("aaa");
+        coll.add("bbb");
+        coll.add("ccc");
+        //创建迭代器对象
+        Iterator<String> it = coll.iterator();
+        //获取当前位置是否有元素，返回boolean
+        while (it.hasNext()) {
+            //获取当前指向的元素并移动指针
+            System.out.println(it.next());
+         }
+```
 
+
+
+- 增强for遍历，如果只是遍历就用增强for，Lambda
+
+  所有的单列集合和数组才能用
+
+  集合名字.for+Enter
+
+- lambda表达式
+
+  forEach(){} 
+
+#### List
+
+collection的方法List都继承了。
+
+1. List系列集合独有的方法:
+
+   ```java
+   /*void add(int index,E element)在此集合中的指定位置插入指定的元素
+   E remove(int index)删除指定索引处的元素，返回被删除的元素
+   E set(int index,E element )修改指定索引处的元素，返回被修改的元素
+   E get(int index)返回指定索引处的元素
+   */
+   ```
+
+2. 遍历方法
+
+   迭代器、增强for、Lambda表达式、普通for循环、
+
+   列表迭代器：ListIterator
+
+   遍历过程中需要删除用迭代器。
+
+   遍历过程中需要添加用列表迭代器
+
+   仅遍历用for，Lambda。
+
+#### 数据结构
+
+1. 栈：先进后出（弹夹）
+2. 队列：先进先出
+3. 数组：查询快，增删慢
+4. 链表：查询慢，增删快
+
+#### ArrayList集合
+
+
+
+#### LinkedList集合
