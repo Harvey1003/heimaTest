@@ -2366,6 +2366,78 @@ collection的方法List都继承了。
 
 #### ArrayList集合
 
-
+数组结构，默认长度为0。添加一个元素后默认新长度为10，size()方法即表示元素的个数也表示下个元素存放的位置索引。存满会扩容1.5倍，grow()方法。如果添加的元素过多，会新建数组容量为老容量+实际需要的容量。
 
 #### LinkedList集合
+
+链表
+
+#### 泛型
+
+- 泛型中不能写基本数据类型
+- 指定泛型的具体类型后，传递数据时，可以传入该类类型或者其子类类型
+- 如果不写泛型，类型默认是object
+
+1. 泛型类
+
+   创建对象时要带上泛型
+
+   ```java
+   public class MyArrayList<E>{
+      Object[] obj= new Object[10];
+      int size;
+      public boolean add(E e){
+          obj[size]=e;
+          size++;
+          return true;
+      }
+      public E get(int index){
+          return (E) obj[index];
+      }
+      
+   }
+   ```
+
+2. 泛型方法
+
+   <E>写在修饰符后面
+
+   ```java
+   public static <E> void addAll(ArrayList<E> list,E...e){
+           for (E element : e) {
+               System.out.println(element);
+           }
+       }
+   ```
+
+3. 泛型接口
+
+   实现类给出具体的类型；
+
+   ```java
+   public class a02 implements List<String> {}
+   ```
+
+   实现类延续泛型，创建实现类对象再确定类型。
+
+   ```java
+   public class a02<E> implements List<E> {}
+   ```
+
+4. 泛型的继承和通配符
+
+   泛型没有继承性，但数据有。
+
+   通配符：
+
+   ？表示不确定类型。
+
+   ？extends E：表示可以传递E或者E所有的子类类型。
+
+   ？ super E：表示可以传递E或者E所有的父类类型。
+
+   应用场景：
+
+   1. 如果定义接口、类、方法的时候，如果类型不确定，就可以定义泛型类、方法、接口。
+   2. 如果类型不确定，但是能知道以后只能传递某个继承体系中的，就可以泛型的通配符。
+
