@@ -2278,7 +2278,9 @@ public static void main(String[] args) {
 
 ## 集合
 
-#### collection
+## collection
+
+![d62a07f9-5e1b-4c2d-98ca-15627a92791a](C:\Users\rkhd\Documents\WXWork\1688854850501176\Cache\Image\2023-12\d62a07f9-5e1b-4c2d-98ca-15627a92791a.png)
 
 1. 单列集合的顶层接口，所有的方法被list和Set系列集合共享。
 
@@ -2331,7 +2333,7 @@ Collection<String> coll = new ArrayList<>();
 
   forEach(){} 
 
-#### List
+### List系列
 
 collection的方法List都继承了。
 
@@ -2440,4 +2442,154 @@ collection的方法List都继承了。
 
    1. 如果定义接口、类、方法的时候，如果类型不确定，就可以定义泛型类、方法、接口。
    2. 如果类型不确定，但是能知道以后只能传递某个继承体系中的，就可以泛型的通配符。
+
+#### 二叉树
+
+1. 二叉查找/排序/搜索树
+
+   最多有两个子节点；小的存左边，大的存右边，相同不存。
+
+2. 平衡二叉树
+
+   任意节点的左右高度差不能超过1
+
+3. 旋转机制
+
+   左旋：
+
+   右旋
+
+4. 触发旋转
+
+   - 左左：当根节点左子树的左子树有节点插入，导致二叉树不平衡。一次右旋
+   - 左右：局部左旋，调整为左左再右旋
+   - 右右：一次左旋
+   - 右左：局部右旋，调整为右右再左旋
+
+#### 红黑树
+
+二叉查找树
+
+每一个节点可以是红或者黑，红黑树不是高度平衡的，它的平衡是通过"红黑规则"进行实现的
+
+规则
+
+1. 每个节点是红色或黑色；
+2. 根节点必须是黑色；
+3. 叶节点是黑色的；
+4. 两个红色节点不能相连
+5. 任意节点到所有后代叶节点的简单路径上，黑色节点的数量相同。
+
+添加节点规则
+
+添加的节点默认是红色
+
+![df7b360d-9bdc-4103-a5ff-9cec5247081f](C:\Users\rkhd\Documents\WXWork\1688854850501176\Cache\Image\2023-12\df7b360d-9bdc-4103-a5ff-9cec5247081f.png)
+
+红黑树的增删改查性能好。
+
+### Set系列
+
+无序，不重复，无索引
+
+```java
+//三种遍历方式
+Set<String> s1 = new HashSet();
+s1.add("aaa");
+s1.add("ydd");
+s1.add("ydd");
+s1.add("lcr");
+System.out.println("-------迭代器--------");
+Iterator<String> it = s1.iterator();
+while (it.hasNext()) {
+    System.out.println(it.next());
+}
+System.out.println("-------------------");
+System.out.println("-------增强for--------");
+for (String s : s1) {
+    System.out.println(s);
+}
+System.out.println("-------------------");
+System.out.println("-------Lambda--------");
+s1.forEach(s -> System.out.println(s));
+System.out.println("-------------------");
+```
+
+#### HashSet
+
+无序，不重复，无索引
+
+哈希值：
+
+1. 如果没有重写HashCode方法，不同对象计算出的哈希值不同。
+2. 如果重写了，不同对象只要属性值相同，计算出的哈希值就是一样的。
+3. 小部分情况下或出现哈希碰撞，不同属性值不同地址值计算出的哈希值也可能是一样的。
+
+底层原理
+
+1. HashSet集合的底层数据结构是什么样的?
+
+   Hash表存储数据，默认长度16，叫table
+
+2. HashSet添加元素的过程?
+
+   哈希值与长度计算出存放位置。判断位置是否为null，为null直接存、不为null则调用equals方法比较，相同则不插入，不同挂载再下面。
+
+3. HashSet为什么存和取的顺序不一样?
+
+   哈希值与长度计算出存放位置。
+
+4. HashSet为什么没有索引?
+
+   每个位置储存的是链表或者红黑树。
+
+5. HashSet是利用什么机制保证去重的?
+
+   hashcode方法和equals方法
+
+#### LinkedHashSet
+
+有序，不重复，无索引
+
+
+
+#### TreeSet
+
+可徘序，不重复，无索引
+
+排序规则:
+
+默认规则Comparable<E>接口，重写compareTo方法返回值为
+
+1. 负数，认为元素是小的，存左边，升序
+2. 正数，认为元素是大的，存右边，降序
+3. 0，认为元素已存在，舍弃
+
+```java
+
+@Override
+    public int compareTo(Student o) {
+        return this.getAge()-o.getAge();
+    }
+```
+
+比较器排序
+
+```java
+TreeSet<String> str = new TreeSet<>(new Comparator<String>() {
+    @Override
+    public int compare(String o1, String o2) {
+        //按照长度排序
+        int i = o1.length() - o2.length();
+        //如果长度一样按照首字母排序，o1是String类型，String类里已经重写过compareTo方法了。
+        i = i == 0 ? o1.compareTo(o2) : i;
+        return i;
+    }
+});
+str.add("abc");
+str.add("ac");
+str.add("ad");
+str.add("qwer");
+System.out.println(str);
+```
 
