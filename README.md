@@ -2573,6 +2573,35 @@ System.out.println("-------------------");
     }
 ```
 
+```java
+//学生类Javabean*成绩排序
+@Override
+    public int compareTo(Student2 o) {
+        double thisSum = this.getChineseScores() + this.getMathScores() + this.getEnglishScores();
+        double osum = o.getChineseScores() + o.getMathScores() + o.getEnglishScores();
+        //比较总分
+        double i =  osum-thisSum ;
+        //如果总成绩相同按照语文成绩
+        i = i == 0 ? o.getChineseScores() - this.getChineseScores() : i;
+        //按照数学
+        i = i == 0 ? this.getMathScores() - o.getMathScores() : i;
+        //按照英语，
+        i = i == 0 ? this.getEnglishScores() - o.getEnglishScores() : i;
+        //按照年龄
+        i = i == 0 ? this.getAge() - o.getAge() : i;
+        //按照年龄首字母
+        i = i == 0 ? this.getName().compareTo(o.getName()) : i;
+        if (i > 0) {
+            return 1;
+        } else if (i < 0) {
+            return -1;
+        } else {
+            return 0;
+        }
+
+    }
+```
+
 比较器排序
 
 ```java
@@ -2593,3 +2622,97 @@ str.add("qwer");
 System.out.println(str);
 ```
 
+### 使用场景
+
+1. 可重复集合用ArrayList;
+2. 可重复，增删操作多于查询用LinkedList；
+3. 集合去重HashSet；
+4. 去重并保证存取顺序LinkedHashSet；
+5. 去重并排序用TreeSet。
+
+## Map(双列集合)
+
+key ：value
+
+```java
+Map<String, String> m = new HashMap<>();
+
+//V put(K key,V value )添加元素/覆盖
+m.put("韦小宝","沐剑屏");
+m.put("尹志平","小龙女");
+m.put("郭靖","黄蓉");
+//如果key存在，则覆盖掉value，返回被覆盖的value
+String put = m.put("韦小宝", "双儿");
+
+//V remove(Object key)根据键则除键值对元素
+m.remove("尹志平");
+//void clear()移除所有的键值对元素
+m.clear();
+//boolean containsKey(object key)判断集合是否包含指定的键
+m.containsKey("尹志平");
+//boolean containsValue(Object value)判断集合是否包含指定的值
+m.containsValue("双儿");
+//boolean isEmpty()判断集合是否为空
+m.isEmpty();
+//int size()集合的长度，也就是集合中键值对的个数
+int size = m.size();
+```
+
+三种遍历方式
+
+1. 键找值
+2. 迭代器
+3. 第三种遍历方式BiConsumer
+
+```java
+Map<String, String> m = new HashMap<>();
+        m.put("韦小宝", "沐剑屏");
+        m.put("尹志平", "小龙女");
+        m.put("郭靖", "黄蓉");
+        System.out.println("-----------键找值方式-----------");
+        System.out.println("-----------增强for-----------");
+        Set<String> keys = m.keySet();
+        for (String s : keys) {
+            System.out.println(s + ":" + m.get(s));
+        }
+        System.out.println("-----------迭代器-----------");
+        Iterator<String> it = keys.iterator();
+        while (it.hasNext()) {
+            String keyNext = it.next();
+            System.out.println(keyNext + ":" + m.get(keyNext));
+        }
+        System.out.println("-----------Lambda-----------");
+        keys.forEach(s -> System.out.println(s + ":" + m.get(s)));
+
+
+        System.out.println("-----------键值对方式-----------");
+        Set<Entry<String, String>> entries = m.entrySet();
+        System.out.println("-----------增强for-----------");
+        for (Entry<String, String> entry : entries) {
+            System.out.println(entry);
+        }
+        System.out.println("-----------迭代器-----------");
+        Iterator<Entry<String, String>> it2 = entries.iterator();
+        while (it2.hasNext()) {
+            System.out.println(it2.next());
+        }
+        System.out.println("-----------Lambda-----------");
+        entries.forEach(stringStringEntry -> System.out.println(stringStringEntry));
+
+        System.out.println("-----------第三种遍历方式-----------");
+        m.forEach(new BiConsumer<String, String>() {
+            @Override
+            public void accept(String key, String value) {
+                System.out.println(key+"="+value);
+            }
+        });
+```
+
+#### HashMap
+
+链表+数组+红黑树
+
+1.HashMap底层是哈希表结构的，链表+数组+红黑树
+2.依赖hashCode方法和equals方法保证键的唯一
+3.如果键存储的是自定义对象，需要重写hashCode和equals方法
+如果值存储自定义对象，不需要重写hashCode和equals方法
