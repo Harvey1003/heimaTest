@@ -2,7 +2,7 @@ package com.MyMap;
 
 import java.util.Objects;
 
-public class Student {
+public class Student implements Comparable<Student> {
     private String name;
     private int age;
 
@@ -29,6 +29,7 @@ public class Student {
 
     /**
      * 获取
+     *
      * @return name
      */
     public String getName() {
@@ -37,6 +38,7 @@ public class Student {
 
     /**
      * 设置
+     *
      * @param name
      */
     public void setName(String name) {
@@ -45,6 +47,7 @@ public class Student {
 
     /**
      * 获取
+     *
      * @return age
      */
     public int getAge() {
@@ -53,6 +56,7 @@ public class Student {
 
     /**
      * 设置
+     *
      * @param age
      */
     public void setAge(int age) {
@@ -61,5 +65,15 @@ public class Student {
 
     public String toString() {
         return "Student{name = " + name + ", age = " + age + "}";
+    }
+
+    @Override
+    public int compareTo(Student o) {
+        int age1 = this.getAge();
+        int age2 = o.getAge();
+        int i = age1 - age2;
+        i = i == 0 ? this.getName().compareTo(o.getName()) : i;
+
+        return i;
     }
 }

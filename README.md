@@ -2716,3 +2716,15 @@ Map<String, String> m = new HashMap<>();
 2.依赖hashCode方法和equals方法保证键的唯一
 3.如果键存储的是自定义对象，需要重写hashCode和equals方法
 如果值存储自定义对象，不需要重写hashCode和equals方法
+
+#### LinkedHashMap
+
+键，有序、唯一、没索引。
+
+#### TreeMap
+
+红黑树，键不能重复、没索引、可排序。
+
+排序方法跟TreeSet一样,
+
+comparable接口和compareable比较器。

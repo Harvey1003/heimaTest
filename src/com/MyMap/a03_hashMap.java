@@ -16,5 +16,9 @@ public class a03_hashMap {
                 System.out.println(student+s);
             }
         });
+
+        for (Student student : hm.keySet()) {
+            System.out.println(student + hm.get(student));
+        }
     }
 }
