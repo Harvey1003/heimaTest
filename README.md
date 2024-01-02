@@ -2484,7 +2484,7 @@ collection的方法List都继承了。
 
 添加的节点默认是红色
 
-![df7b360d-9bdc-4103-a5ff-9cec5247081f](C:\Users\rkhd\Documents\WXWork\1688854850501176\Cache\Image\2023-12\df7b360d-9bdc-4103-a5ff-9cec5247081f.png)
+![](E:\workspace\heimaTest\img\cb4b262d-0400-45cf-bd1a-20097d8ebfad.png)
 
 红黑树的增删改查性能好。
 
