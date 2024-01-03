@@ -2728,3 +2728,71 @@ Map<String, String> m = new HashMap<>();
 排序方法跟TreeSet一样,
 
 comparable接口和compareable比较器。
+
+#### 小结
+
+1. TreeMap添加元素时，键是否需要重写Hashcode、equals方法？
+
+   ​    不需要
+
+2. HashMap是哈希表结构的，JDK8开始由数组，链表，红黑树组成的。既然有红黑树，HashMap的键是否需要实现compareable接口或者传递比较器对象呢?
+       不需要的。
+   因为在Hashmap的底层，默认是利用哈希值的大小关系来创建红黑树的
+
+3. TreeMap和HashMap谁的效率更高?
+       如果是最坏情况，添加了8个元素，这8个元素形成了链表，此时TreeMap的效率要更高，但是这种情况出现的几率非常的少。
+   一般而言，还是HashMap的效率要更高。
+
+4. 你觉得在Map集合中，java会提供一个如果键重复了，不会覆盖的put方法呢?
+       此时putIfAbsent本身不重要。
+   传递一个思想:
+   代码中的逻辑都有两面性，
+   如果我们只知道了其中的A面，而且代码中还发现了有变量可以控制两面性的发生。
+   那么该逻辑一定会有B面。
+   习惯:
+   boolean类型的变量控制，一般只有AB两面，因为boolean只有两个值
+   int类型的变量控制，一般至少有三面，因为int可以取多个值。
+
+5. 三种双列集合，以后如何选择?
+       HashMap LinkedashMap TreeMap
+   默认: HashMap (效率最高)
+   如果要保证存取有序: LinkedhashMap
+   如果要进行排序: TreeMap
+
+### collections（工具类）
+
+#### 可变参数
+
+方法形参个数可以是多个，一个方法最多有一个可变参数。如果有其他参数，则必须写在最后面。
+
+#### 常用API
+
+1. 批量添加
+
+   ```java
+   Collections.addAll(list,"a","b","c","d","e");
+   ```
+
+2. 打乱List集合元素的顺序
+
+   ```java
+   Collections.shuffle(list);
+   ```
+
+3. public static <T> void sort(List<T> list)；排序
+
+4. public static <T> void sort(List<T> list, Comparator<T> c)根据指定的规则进行排序
+
+5. public static <T> int binarySearch (List<T> list, T key)以二分查找法查找元素(需要元素有序)
+
+6. public static <T> void copy(List<T> dest, List<T> src)拷贝集合中的元素
+
+7. public static <T> int fill (List<T> list, T obj)使用指定的元素填充集合
+
+8. public static <T> void max/min(Collection<T> coll)根据默认的自然排序获取最大/小值
+
+9. public static <T> void swap(List<?> list, int i, int j)交换集合中指定位置的元素
+
+### 综合练习
+
+综合
